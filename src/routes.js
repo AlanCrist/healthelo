@@ -1,30 +1,13 @@
 const express = require("express");
-const crypto = require("crypto");
+
+const HospitalController = require("./controllers/HospitalController");
+
 const connection = require("./database/connection");
 
 const routes = express.Router();
 
-routes.get("/hospitais", async (req, res) => {
-  const hospitais = await connection("hospitais").select("*");
+routes.get("/hospitais", HospitalController.index);
 
-  return res.json(hospitais);
-})
-
-routes.post("/hospitais", (req, res) => {
-  const { name, email, whatsapp, city, uf } = request.body;
-
-  const id = crypto.randomBytes(4).toString("HEX");
-
-  connection("hospitais").insert({
-    id,
-    name,
-    email,
-    whatsapp,
-    city,
-    uf
-  });
-
-  return res.json({ id });
-});
+routes.post("/hospitais", HospitalController.create);
 
 module.exports = routes;
